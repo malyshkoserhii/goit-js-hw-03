@@ -26,17 +26,17 @@ const getAllPropValues = function (arr, prop) {
 
   /* Те ж саме тільки через цикл for лише щоб попрактикуватися */
 
-  //   for (let product of arr) {
-  //     if (prop === "name") {
-  //       property.push(product.name);
-  //     }
-  //     if (prop === "price") {
-  //       property.push(product.price);
-  //     }
-  //     if (prop === "quantity") {
-  //       property.push(product.quantity);
-  //     }
+  // for (let product of arr) {
+  //   if (prop === "name") {
+  //     property.push(product[prop]);
   //   }
+  //   if (prop === "price") {
+  //     property.push(product[prop]);
+  //   }
+  //   if (prop === "quantity") {
+  //     property.push(product[prop]);
+  //   }
+  // }
 
   return property;
 };
