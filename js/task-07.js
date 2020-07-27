@@ -13,13 +13,11 @@ const account = {
   transactions: [],
 
   createTransaction(amount, type) {
-    if (amount > 0) {
-      this.transactions.push({
-        amount: amount,
-        type: type,
-        id: this.transactionID,
-      });
-    }
+    this.transactions.push({
+      amount: amount,
+      type: type,
+      id: this.transactionID,
+    });
   },
 
   deposit(amount) {
@@ -27,20 +25,18 @@ const account = {
       this.createTransaction(amount, Transaction.DEPOSIT);
       this.balance += amount;
       this.transactionID += 1;
-      return `Ваш рахунок поповнено на ${amount} грн. Ваш поточний баланс: ${this.balance}`;
+      return `Ваш рахунок поповнено на ${amount} грн. Ваш поточний баланс: ${this.balance} грн.`;
     }
   },
 
   withdraw(amount) {
-    if (amount > 0 && amount < this.balance) {
+    if (amount < this.balance) {
       this.createTransaction(amount, Transaction.WITHDRAW);
       this.balance -= amount;
       this.transactionID += 1;
-      return `Ви зняли ${amount} грн. Вам доступно: ${this.balance}`;
+      return `Ви зняли ${amount} грн. Вам доступно: ${this.balance} грн.`;
     }
-    if (amount > this.balance) {
-      return `Ви перевищили ліміт. Зняття готівки не можливо. BALANCE: ${this.balance}`;
-    }
+    return `Ви перевищили ліміт. Зняття готівки не можливо. Вам доступно: ${this.balance} грн.`;
   },
 
   getBalance() {
@@ -84,9 +80,9 @@ console.table(account.getTransactionDetails(1000005));
 
 console.log(
   "getTransactionTotal (deposit):",
-  account.getTransactionTotal("deposit")
+  account.getTransactionTotal("deposit"),
 );
 console.log(
   "getTransactionTotal (withdraw):",
-  account.getTransactionTotal("withdraw")
+  account.getTransactionTotal("withdraw"),
 );
