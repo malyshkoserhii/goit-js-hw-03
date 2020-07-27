@@ -27,80 +27,66 @@ const account = {
       this.createTransaction(amount, Transaction.DEPOSIT);
       this.balance += amount;
       this.transactionID += 1;
-      return `Ваш рахунок поповнено на ${amount} грн. Баланс: ${this.balance}`;
+      return `Ваш рахунок поповнено на ${amount} грн. Ваш поточний баланс: ${this.balance}`;
     }
   },
 
   withdraw(amount) {
     if (amount > 0 && amount < this.balance) {
-      console.log(`BALANCE:`, this.balance);
       this.createTransaction(amount, Transaction.WITHDRAW);
       this.balance -= amount;
       this.transactionID += 1;
-      return `Ви зняли ${amount} грн. BALANCE: ${this.balance}`;
+      return `Ви зняли ${amount} грн. Вам доступно: ${this.balance}`;
     }
     if (amount > this.balance) {
       return `Ви перевищили ліміт. Зняття готівки не можливо. BALANCE: ${this.balance}`;
     }
   },
+
   getBalance() {
     return `На вашому балансі: ${this.balance} грн.`;
   },
+
   getTransactionDetails(id) {
-      for (let i = 0; i < this.transactions.length; i += 1) {
-        const currentTransaction =  this.transactions[i];
-        if (id === currentTransaction.id) {
-            return currentTransaction;
-        }
-    }
-      return `Транзакція з таким ID відсутня`;
-  },
-  /*
-   * Метод возвращает количество средств
-   * определенного типа транзакции из всей истории транзакций
-   */
-  getTransactionTotal(type) {
-    //   for (let item of this.transactions) {
-    //       console.log(item.type);
-    //       let ammountOftype = 0;
-    //       if(type === item.type) {
-    //       }
-    //   }
-    const depositType = [];
-    let totalDeposit = 0;
-      for(let i = 0; i < this.transactions.length; i += 1) {
-        //   const  values = Object.values(this.transactions[i]);
-         if(this.transactions[i].type === 'deposit') {
-             depositType.push(this.transactions[i].amount);
-             for (const item of depositType) {
-                 totalDeposit += item;
-                 console.log('ITEM', item);
-                //  return `TOTAAAAAAL: ${totalDeposit}`;
-             }
-         }
-        // console.log(this.transactions[i].type);
-          console.log(depositType);
-        //   console.log("depositType", depositType.length);
-          
-          
-        //   console.log(values);
-        //   if(value === 'deposit') {
-        //       console.log('Hello');
-        //   }
+    for (let i = 0; i < this.transactions.length; i += 1) {
+      const currentTransaction = this.transactions[i];
+      if (id === currentTransaction.id) {
+        return currentTransaction;
       }
+    }
+    return `Транзакція з таким ID відсутня`;
+  },
+
+  getTransactionTotal(type) {
+    let transactionTotal = 0;
+
+    for (let i = 0; i < this.transactions.length; i += 1) {
+      if (this.transactions[i].type === type) {
+        transactionTotal += this.transactions[i].amount;
+      }
+    }
+    return transactionTotal;
   },
 };
 
-console.log(account.transactions);
-console.log(account.deposit(50));
-console.log(account.deposit(10));
-console.log(account.deposit(20));
+console.log("deposit:", account.deposit(5000));
+console.log("deposit:", account.deposit(1000));
+console.log("deposit:", account.deposit(2000));
 
-console.log(account.withdraw(70));
-console.log(account.withdraw(5));
+console.log("withdraw:", account.withdraw(700));
+console.log("withdraw:", account.withdraw(50));
+console.log("withdraw:", account.withdraw(450));
 
-// console.log('getBalance:', account.getBalance());
+console.log("getBalance:", account.getBalance());
 
 console.table(account.getTransactionDetails(1000002));
+console.table(account.getTransactionDetails(1000005));
 
-console.log('getTransactionTotal:--------', account.getTransactionTotal('deposit'));
+console.log(
+  "getTransactionTotal (deposit):",
+  account.getTransactionTotal("deposit")
+);
+console.log(
+  "getTransactionTotal (withdraw):",
+  account.getTransactionTotal("withdraw")
+);
